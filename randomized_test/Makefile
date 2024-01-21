@@ -15,3 +15,5 @@ random:
 
 # Perform monkey testing on each APK file
 	@for APK_FILE in $(APK_LIST); do python monkey.py $$APK_FILE; done
+
+.PHONY: random

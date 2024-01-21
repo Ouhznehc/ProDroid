@@ -96,7 +96,7 @@ if package_name and main_activity:
             uninstall_command = f'adb uninstall {package_name}'
 
             # Run Monkey to perform random testing
-            monkey_command = f'adb shell monkey -p {package_name} --ignore-crashes --ignore-timeouts --ignore-security-exception --pct-nav 0 --pct-syskeys 0 --pct-appswitch 0 --pct-anyevent 0 -s {RANDOM_SEED} {EVENTS_COUNT}'
+            monkey_command = f'adb shell monkey -p {package_name} --ignore-crashes --ignore-timeouts --ignore-security-exceptions --pct-nav 0 --pct-syskeys 0 --pct-appswitch 0 --pct-anyevent 0 -s {RANDOM_SEED} {EVENTS_COUNT}'
             with open(os.devnull, 'w') as devnull:
                 subprocess.run(lock_task_command, shell=True, stdout=devnull, stderr=devnull)
                 subprocess.run(monkey_command, shell=True, stdout=devnull, stderr=devnull)
