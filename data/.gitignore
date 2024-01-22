@@ -1,10 +1,10 @@
-log/*
+/log/*
 resource/*
 upload/*
 apk/*
 birthmark/*
 
-!log/
+!/log/
 !resource/temporary/
 !resource/permanent/
 !upload/
