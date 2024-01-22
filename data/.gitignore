@@ -4,11 +4,3 @@ upload/*
 apk/*
 birthmark/*
 
-!log/
-!resource/temporary/
-!resource/permanent/
-!upload/
-!birthmark/temporary/
-!birthmark/permanent/
-!apk/temporary/
-!apk/permanent/
