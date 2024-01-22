@@ -4,3 +4,8 @@ upload/*
 apk/*
 birthmark/*
 
+!log
+!resource
+!upload
+!apk
+!birthmark
