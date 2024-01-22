@@ -1,4 +1,4 @@
-log/
-resource/
-upload/
-apk/
+log/*
+resource/*
+upload/*
+apk/*
