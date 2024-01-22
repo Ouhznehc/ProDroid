@@ -1,1 +1,4 @@
-log/*
+log/
+resource/
+upload/
+apk/

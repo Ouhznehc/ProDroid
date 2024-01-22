@@ -1,8 +1,9 @@
 
 # Get a list of APK files in the APK_LIST directory
 APK_PATH := $(shell jq -r '.apk_path' config.json)
-LOG_FILE := $(shell jq -r '.log_path' config.json)
 APK_LIST := $(wildcard $(APK_PATH)/*.apk)
+
+LOG_FILE := $(shell jq -r '.log_path' config.json)
 
 random:
 # Check sanity for necessary files
