@@ -4,8 +4,12 @@ upload/*
 apk/*
 birthmark/*
 
-!log
-!resource
-!upload
-!apk
-!birthmark
+!log/.gitkeep
+!resource/temporary/.gitkeep
+!resource/permanent/.gitkeep
+!upload/.gitkeep
+!apk/temporary/.gitkeep
+!apk/permanent/.gitkeep
+!birthmark/temporary/.gitkeep
+!birthmark/permanent/.gitkeep
+
