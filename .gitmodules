@@ -1,0 +1,3 @@
+[submodule "birthmark_generation/kmeans/hash-k-means"]
+	path = birthmark_generation/kmeans/hash-k-means
+	url = git@github.com:Bardisk/hash-k-means
