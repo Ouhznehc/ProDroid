@@ -1,6 +1,6 @@
 {
   "n_iters": 5,
-  "n_clusters": 10,
+  "n_clusters": 4096,
   "dataset": "../../data/birthmark/kmeans/dataset.txt",
   "kmeans_output": "../../data/birthmark/kmeans/kmeans.txt"
 }

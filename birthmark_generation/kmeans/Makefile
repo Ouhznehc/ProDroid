@@ -1,3 +1,6 @@
 kmeans: hash-k-means
-	$(MAKE) -C hash-k-means
-	cp hash-k-means/build/hash-k-means kmeans
+	@make -C hash-k-means
+	@cp hash-k-means/build/hash-k-means kmeans
+	@python kmeans.py
+
+.PHONY: kmeans

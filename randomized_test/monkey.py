@@ -55,7 +55,8 @@ def get_aapt_output(command, package_name_pattern, main_activity_pattern):
 package_name, main_activity = get_aapt_output(f'aapt dump badging {APK_FILE}', package_name_pattern, main_activity_pattern)
 
 if package_name and main_activity:
-
+    log_info(f"Package name: {package_name}, Main activity: {main_activity}")
+    
     # Install the APK file
     install_command = f'adb install {APK_FILE}'
     install_result = subprocess.run(install_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
