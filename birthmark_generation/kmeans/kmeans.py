@@ -10,3 +10,4 @@ with open('config.json', 'r') as file:
     kmeans_output = config['kmeans_output']
 
 subprocess.run(f'sh -c \"./kmeans -c {n_clusters} -t {n_iters} < {dataset} > {kmeans_output}\"', shell=True)
+
