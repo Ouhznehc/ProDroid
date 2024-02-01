@@ -1,0 +1,9 @@
+{
+    "apk_dir": "../data/resource/temporary",
+    "kmeans_output_dir": "../data/birthmark/temporary",
+    "kmeans_file_path": "../data/birthmark/kmeans/kmeans.txt",
+    "minihash_output_dir": "../data/birthmark/temporary",
+    "num_perm": 1000,
+    "threshold": 0.3,
+    "weights": [0.9, 0.1]
+}

@@ -16,3 +16,5 @@ birthmark/permanent/*
 !birthmark/temporary/.gitkeep
 !birthmark/permanent/.gitkeep
 
+!birthmark/kmeans/dataset.txt
+!birthmark/kmeans/kmeans.txt
