@@ -13,7 +13,7 @@ def process_apk_minihash(apk_name, kmeans_file_path, minihash_output_dir, num_pe
     minhash = MinHash(num_perm=num_perm)
     with open(kmeans_file_path, 'r') as file:
         for line in file:
-            hash_val = line.strip()
+            hash_val = line.strip().split(': ')[1]
             minhash.update(str(hash_val).encode())
 
     apk_output_path = os.path.join(minihash_output_dir, apk_name)
@@ -25,18 +25,18 @@ def main():
     with open('config.json', 'r') as file:
         config = json.load(file)
 
-    kmeans_output_dir = config['kmeans_output_dir']
-    minihash_output_dir = config['minihash_output_dir']
+    kmeans_dir = config['output_dir']
+    minihash_dir = config['output_dir']
     num_perm = config.get('num_perm', 1000)  # 默认为1000
     # 读取threshold和weights配置
     threshold = config.get('threshold', 0.3)
     weights = tuple(config.get('weights', (0.9, 0.1)))
 
-    for apk_name in os.listdir(kmeans_output_dir):
-        apk_kmeans_dir = os.path.join(kmeans_output_dir, apk_name)
+    for apk_name in os.listdir(kmeans_dir):
+        apk_kmeans_dir = os.path.join(kmeans_dir, apk_name)
         kmeans_file_path = os.path.join(apk_kmeans_dir, 'kmeans.txt')
         if os.path.isfile(kmeans_file_path):
-            process_apk_minihash(apk_name, kmeans_file_path, minihash_output_dir, num_perm)
+            process_apk_minihash(apk_name, kmeans_file_path, minihash_dir, num_perm)
 
 if __name__ == '__main__':
     main()
