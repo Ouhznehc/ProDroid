@@ -20,6 +20,10 @@ birthmark_generation:
 	@echo "birthmark generation..."
 	@make -C $(BIRTHMARK_DIR) birthmark
 
+repackage_detection:
+	@echo "repackage detection..."
+	@echo "TODO"
+
 archive:
 	@echo "archive..."
 	@make -C $(DATA_DIR) archive
@@ -34,4 +38,4 @@ clean-all:
 
 
 
-.PHONY: randomized_test archive server clean clean-all birthmark_generation
+.PHONY: randomized_test resource_collection birthmark_generation repackage_detection archive server clean clean-all 
