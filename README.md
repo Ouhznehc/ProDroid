@@ -28,7 +28,7 @@ pip install flask imagehash datasketch
   - `make randomized_test` to run automatic test.
   - `make resource_collection` to classify resources.
   - `make birthmark_generation` to generate birthmark.
-  - `make repackage_detection`: TODO
+  - `make repackage_detection`: to generate repackage detection report to `data/report/report.csv`
 
 4. more support:
   - `make archive` to move all file in `data/*/temporary` into `data/*/permanent`

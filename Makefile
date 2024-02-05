@@ -22,7 +22,7 @@ birthmark_generation:
 
 repackage_detection:
 	@echo "repackage detection..."
-	@echo "TODO"
+	@make -C $(REPACKAGE_DIR) detection
 
 archive:
 	@echo "archive..."

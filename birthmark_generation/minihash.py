@@ -28,9 +28,6 @@ def main():
     kmeans_dir = config['output_dir']
     minihash_dir = config['output_dir']
     num_perm = config.get('num_perm', 1000)  # 默认为1000
-    # 读取threshold和weights配置
-    threshold = config.get('threshold', 0.3)
-    weights = tuple(config.get('weights', (0.9, 0.1)))
 
     for apk_name in os.listdir(kmeans_dir):
         apk_kmeans_dir = os.path.join(kmeans_dir, apk_name)

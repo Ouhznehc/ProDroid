@@ -8,10 +8,12 @@ clean:
 	@rm -rf $(DATA_DIR)/apk/temporary/*
 	@rm -rf $(DATA_DIR)/birthmark/temporary/*
 	@rm -rf $(DATA_DIR)/log/*
+	@rm -rf $(DATA_DIR)/report/*
 
 clean-all: clean
 	@rm -rf $(DATA_DIR)/resource/permanent/*
 	@rm -rf $(DATA_DIR)/apk/permanent/*
 	@rm -rf $(DATA_DIR)/birthmark/permanent/*
+
 
 .PHONY: archive clean clean-all
