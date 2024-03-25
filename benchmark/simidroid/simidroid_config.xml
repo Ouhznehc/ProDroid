@@ -1,0 +1,18 @@
+<SimiDroid>
+	<AndroidJarsPath>../android-platforms</AndroidJarsPath>
+	<!-- 
+	<Plugin name="METHOD">
+		<LibrarySetPath exclusive="false">res/libs91.txt</LibrarySetPath>
+	</Plugin>
+	 
+	<Plugin name="COMPONENT" />
+	<Plugin name="RESOURCE" />
+	-->
+	
+	<Plugin name="RESOURCE">
+		<ResExtensionSetPath exclusive="true">res/extensions.txt</ResExtensionSetPath>
+	</Plugin>
+
+	<SimiThreshold>0.1</SimiThreshold>
+	
+</SimiDroid>
