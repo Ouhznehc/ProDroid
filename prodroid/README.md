@@ -22,7 +22,7 @@ pip install flask imagehash datasketch
 
 1. open a new terminal, use `make server` to start listenning.
 
-2. put apk file into `data/apk/temporary`
+2. set apk file path in `dandomized_test/config.json`
 
 3. begin prodroid rontine:
   - `make randomized_test` to run automatic test.

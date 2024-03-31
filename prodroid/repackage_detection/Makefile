@@ -1,4 +1,4 @@
 detection:
-	@python lsh.py
+	@python3 lsh.py
 
 .PHONY: detection

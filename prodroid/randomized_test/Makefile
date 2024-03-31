@@ -15,6 +15,6 @@ random:
 	@test -f $(LOG_FILE) && rm -f $(LOG_FILE) || true
 
 # Perform monkey testing on each APK file
-	@for APK_FILE in $(APK_LIST); do python monkey.py $$APK_FILE; done
+	@for APK_FILE in $(APK_LIST); do python3 monkey.py $$APK_FILE; done
 
 .PHONY: random

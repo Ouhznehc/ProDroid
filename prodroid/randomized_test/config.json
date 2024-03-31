@@ -3,5 +3,5 @@
   "initial_delay": 5,
   "events_count": 100000,
   "log_path": "../data/log/monkey.log",
-  "apk_path": "../data/apk/temporary"
+  "apk_path": "../../benchmark/apps/repack/"
 }

@@ -2,8 +2,6 @@ log/*
 resource/temporary/*
 resource/permanent/*
 upload/*
-apk/temporary/*
-apk/permanent/*
 birthmark/temporary/*
 birthmark/permanent/*
 
@@ -11,8 +9,6 @@ birthmark/permanent/*
 !resource/temporary/.gitkeep
 !resource/permanent/.gitkeep
 !upload/.gitkeep
-!apk/temporary/.gitkeep
-!apk/permanent/.gitkeep
 !birthmark/temporary/.gitkeep
 !birthmark/permanent/.gitkeep
 

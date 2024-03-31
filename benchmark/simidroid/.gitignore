@@ -14,3 +14,8 @@ hs_err_pid*
 # Eclipse project file
 .classpath
 .project
+
+*.log
+*.txt
+
+data/*
