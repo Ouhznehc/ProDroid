@@ -27,9 +27,11 @@ log_file = open(LOG_PATH, 'a', encoding='utf-8')
 
 def log_info(message):
   log_file.write(f"[INFO] : {message}\n")
+  print(f"[INFO] : {message}")
 
 def log_error(message):
   log_file.write(f"[ERROR]: {message}\n")
+  print(f"[ERROR]: {message}")
 
 # Get the APK file path from command line arguments
 APK_FILE = sys.argv[1]
@@ -56,6 +58,9 @@ package_name, main_activity = get_aapt_output(f'aapt dump badging {APK_FILE}', p
 
 if package_name and main_activity:
     log_info(f"Package name: {package_name}, Main activity: {main_activity}")
+    if "unity3d" in main_activity:
+        log_error("Unity application detected: skipping...")
+        exit(0)
     
     # Install the APK file
     install_command = f'adb install {APK_FILE}'
