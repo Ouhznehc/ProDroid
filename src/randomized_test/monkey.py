@@ -4,6 +4,7 @@ import time
 import sys
 import re
 import json
+import shutil
 
 # Set the PYTHONIOENCODING environment variable to utf-8
 os.environ['PYTHONIOENCODING'] = 'utf-8'
@@ -15,6 +16,7 @@ RANDOM_SEED = config['random_seed']
 INITIAL_DELAY = config['initial_delay']
 EVENTS_COUNT = config['events_count']
 LOG_PATH = config['log_path']
+APK_KEEP_PATH = config['apk_keep_path']
 
 
 
@@ -58,9 +60,13 @@ package_name, main_activity = get_aapt_output(f'aapt dump badging {APK_FILE}', p
 
 if package_name and main_activity:
     log_info(f"Package name: {package_name}, Main activity: {main_activity}")
+    # After detecting Unity3D application
     if "unity3d" in main_activity:
-        log_error("Unity application detected: skipping...")
-        exit(0)
+        user_input = input("Unity application detected. Do you want to continue testing? (Y/N): ")
+        if user_input.strip().upper() != 'Y':
+            log_info("User opted to stop testing the Unity application.")
+            exit(0)
+        log_info("Proceeding with the Unity application testing...")
     
     # Install the APK file
     install_command = f'adb install {APK_FILE}'
@@ -110,6 +116,20 @@ if package_name and main_activity:
                 subprocess.run(uninstall_command, shell=True, stdout=devnull, stderr=devnull)
 
             log_info("Testing completed")
+            # After the Monkey testing completes and before uninstalling the application
+            keep_app_input = input("Testing completed. Do you want to keep the application? (Y/N): ")
+            if keep_app_input.strip().upper() == 'Y':
+                try:
+                    shutil.move(APK_FILE, APP_KEEP_PATH)
+                    log_info(f"Application moved to {APK_KEEP_PATH}")
+                except Exception as e:
+                    log_error(f"Failed to move APK to {APK_KEEP_PATH}: {e}")
+            else:
+                try:
+                    os.remove(APK_FILE)
+                    log_info("Application APK deleted")
+                except Exception as e:
+                    log_error(f"Failed to delete APK: {e}")  
         else:
             log_error("Task ID not found, unable to lock the application")
     else:

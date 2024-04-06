@@ -1,54 +1,65 @@
-import argparse
-import requests
-import os
+def load_downloaded_apks(downloaded_apk_path):
+    # Load the SHA256 hashes of already downloaded APKs into a set
+    if os.path.exists(downloaded_apk_path):
+        with open(downloaded_apk_path, 'r') as file:
+            return set(line.strip() for line in file)
+    return set()
 
-def download_apk(sha256, download_dir):
+def update_downloaded_apks(sha256, downloaded_apk_path, downloaded_apks):
+    # Add the SHA256 hash to the set and file if it's not already there
+    if sha256 not in downloaded_apks:
+        with open(downloaded_apk_path, 'a') as file:
+            file.write(f'{sha256}\n')
+        downloaded_apks.add(sha256)
+
+def download_apk(sha256, download_dir, downloaded_apk_path, downloaded_apks):
     apk_path = os.path.join(download_dir, f'{sha256}.apk')
-    # Check if the file already exists to avoid redundant downloads
-    if os.path.exists(apk_path):
-        print(f'APK for {sha256} already downloaded, skiping...')
-        return
 
+    if sha256 in downloaded_apks:
+        print(f'APK for {sha256} already downloaded, skipping...')
+        return
+    
     api_key = '71910e1cfbacae7228b9a2b3ca74eb64d75722e667afc534887499855e68103f'
     url = f'https://androzoo.uni.lu/api/download?apikey={api_key}&&sha256={sha256}'
     response = requests.get(url)
     if response.status_code == 200:
         with open(apk_path, 'wb') as file:
             file.write(response.content)
-        print(f'Downloaded APK to {apk_path}')
+        print(f'Downloaded APK for {sha256}')
+        update_downloaded_apks(sha256, downloaded_apk_path, downloaded_apks)
     else:
         print(f'Failed to download APK for SHA256 {sha256}')
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input", help="Path to the repack.txt file", default="repack.txt")
+    parser.add_argument("-i", "--input", help="Path to the repack.txt file", default="repack.csv")
     parser.add_argument("-o", "--output", help="Output directory for downloaded APKs", default="repack/")
     parser.add_argument("-s", "--start", help="Start line (1-based, starts after the first line)", type=int, required=True)
     parser.add_argument("-e", "--end", help="End line (1-based, starts after the first line)", type=int, required=True)
     parser.add_argument("-t", "--type", help="Type of APK to download ('original' or 'repacked_pairs')", required=True)
-    
     args = parser.parse_args()
 
     if not os.path.exists(args.output):
         os.makedirs(args.output)
-    
+        
     if args.type != 'original' and args.type != 'repacked_pairs':
         print(f"Invalid type: {args.type}, required ('original' or 'repacked_paris')")
         return
 
+    downloaded_apk_path = 'downloaded_apk.log'
+    downloaded_apks = load_downloaded_apks(downloaded_apk_path)
+
+    # Existing file reading and processing logic...
     with open(args.input, 'r') as file:
-        # Skip the first line if the enumeration is to start from line 2 for -s 1
         next(file)
-        for i, line in enumerate(file, 1):  # Start counting from 1 after skipping header
+        for i, line in enumerate(file, 1):
             if args.start <= i <= args.end:
                 sha256_original, sha256_repackage = line.strip().split(',')
-                # Check if the files are already downloaded or listed before attempting to download
                 if args.type == 'original':
-                    download_apk(sha256_original, args.output)
+                    download_apk(sha256_original, args.output, downloaded_apk_path, downloaded_apks)
                 elif args.type == 'repacked_pairs':
-                    download_apk(sha256_original, args.output)
-                    download_apk(sha256_repackage, args.output)
-                    
+                    download_apk(sha256_original, args.output, downloaded_apk_path, downloaded_apks)
+                    download_apk(sha256_repackage, args.output, downloaded_apk_path, downloaded_apks)
 
 if __name__ == "__main__":
     main()

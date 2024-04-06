@@ -3,5 +3,6 @@
   "initial_delay": 5,
   "events_count": 100000,
   "log_path": "../data/log/monkey.log",
-  "apk_path": "../../benchmark/apps/repack/"
+  "apk_path": "../../benchmark/apps/repack",
+  "apk_keep_path": "../../benchmark/apps/perfect"
 }
