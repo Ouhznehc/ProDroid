@@ -26,14 +26,20 @@ def download_apk(sha256, download_dir, downloaded_apk_path, downloaded_apks):
     
     api_key = '71910e1cfbacae7228b9a2b3ca74eb64d75722e667afc534887499855e68103f'
     url = f'https://androzoo.uni.lu/api/download?apikey={api_key}&&sha256={sha256}'
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open(apk_path, 'wb') as file:
-            file.write(response.content)
-        print(f'Downloaded APK for {sha256}')
+    try:
         update_downloaded_apks(sha256, downloaded_apk_path, downloaded_apks)
-    else:
-        print(f'Failed to download APK for SHA256 {sha256}')
+        print(f'Downloading APK for {sha256}')
+        response = requests.get(url, timeout=300)
+        if response.status_code == 200:
+            with open(apk_path, 'wb') as file:
+                file.write(response.content)
+            print(f'Successful')
+        else:
+            print(f'Failed')
+    except requests.Timeout:
+        print(f'Timeout (5 minutes)')
+    except requests.RequestException as e:
+        print(f'Error occurred: {e}')
 
 def main():
     parser = argparse.ArgumentParser()
