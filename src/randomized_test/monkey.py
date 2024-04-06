@@ -39,7 +39,8 @@ def log_error(message):
 APK_FILE = sys.argv[1]
 
 log_file.write(f'\n')
-log_info(f"Perform random test on `{APK_FILE}`")
+print("")
+log_info(f"Perform random test on `{os.path.basename(APK_FILE)}`")
 
 
 # Define regular expressions to extract package name and main activity with onLaunch attribute
