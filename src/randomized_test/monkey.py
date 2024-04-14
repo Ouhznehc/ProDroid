@@ -63,9 +63,10 @@ if package_name and main_activity:
     log_info(f"Package name: {package_name}, Main activity: {main_activity}")
     # After detecting Unity3D application
     if "unity3d" in main_activity:
-        user_input = input("Unity application detected. Do you want to continue testing? (Y/N): ")
+        user_input = input("Unity application detected. Do you want to keep this apk? (Y/N): ")
         if user_input.strip().upper() != 'Y':
             log_info("User opted to stop testing the Unity application.")
+            os.remove(APK_FILE)
             exit(0)
         log_info("Proceeding with the Unity application testing...")
     
@@ -112,16 +113,24 @@ if package_name and main_activity:
             monkey_command = f'adb shell monkey -p {package_name} --ignore-crashes --ignore-timeouts --ignore-security-exceptions --pct-nav 0 --pct-syskeys 0 --pct-appswitch 0 --pct-anyevent 0 -s {RANDOM_SEED} {EVENTS_COUNT}'
             with open(os.devnull, 'w') as devnull:
                 subprocess.run(lock_task_command, shell=True, stdout=devnull, stderr=devnull)
-                subprocess.run(monkey_command, shell=True, stdout=devnull, stderr=devnull)
+                monkey_process = subprocess.Popen(monkey_command, shell=True, stdout=devnull, stderr=devnull)
+                # Prompt whether to force quit the Monkey test
+                try:
+                # Monitor Monkey process and wait for completion
+                    monkey_process.wait(timeout=180)
+                    log_info("Monkey test completed successfully")
+                except subprocess.TimeoutExpired:
+                # Monkey test is taking too long or emulator crashed
+                    log_error("Emulator crash detected or Monkey test taking too long. Terminating Monkey test.")
+                    exit(1)
+
                 subprocess.run(unlock_task_command, shell=True, stdout=devnull, stderr=devnull)
                 subprocess.run(uninstall_command, shell=True, stdout=devnull, stderr=devnull)
-
-            log_info("Testing completed")
             # After the Monkey testing completes and before uninstalling the application
             keep_app_input = input("Testing completed. Do you want to keep the application? (Y/N): ")
             if keep_app_input.strip().upper() == 'Y':
                 try:
-                    shutil.move(APK_FILE, APP_KEEP_PATH)
+                    shutil.move(APK_FILE, APK_KEEP_PATH)
                     log_info(f"Application moved to {APK_KEEP_PATH}")
                 except Exception as e:
                     log_error(f"Failed to move APK to {APK_KEEP_PATH}: {e}")
@@ -133,9 +142,12 @@ if package_name and main_activity:
                     log_error(f"Failed to delete APK: {e}")  
         else:
             log_error("Task ID not found, unable to lock the application")
+            os.remove(APK_FILE)
     else:
         log_error("Failed to install APK")
+        os.remove(APK_FILE)
 else:
     log_error("Unable to find package name or MainActivity")
+    os.remove(APK_FILE)
     
 

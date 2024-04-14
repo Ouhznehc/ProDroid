@@ -1,6 +1,8 @@
 import argparse
 import requests
 import os
+from tqdm import tqdm
+
 
 
 def load_downloaded_apks(downloaded_apk_path):
@@ -27,15 +29,19 @@ def download_apk(sha256, download_dir, downloaded_apk_path, downloaded_apks):
     api_key = '71910e1cfbacae7228b9a2b3ca74eb64d75722e667afc534887499855e68103f'
     url = f'https://androzoo.uni.lu/api/download?apikey={api_key}&&sha256={sha256}'
     try:
-        update_downloaded_apks(sha256, downloaded_apk_path, downloaded_apks)
         print(f'Downloading APK for {sha256}')
-        response = requests.get(url, timeout=300)
-        if response.status_code == 200:
-            with open(apk_path, 'wb') as file:
-                file.write(response.content)
-            print(f'Successful')
-        else:
-            print(f'Failed')
+        response = requests.get(url, timeout=300, stream=True)
+        # Sizes in bytes.
+        total_size = int(response.headers.get("content-length", 0))
+        block_size = 1024
+        with tqdm(total=total_size, unit="B", unit_scale=True) as progress_bar:
+            with open(apk_path, "wb") as file:
+                for data in response.iter_content(block_size):
+                    progress_bar.update(len(data))
+                    file.write(data)
+        if total_size != 0 and progress_bar.n != total_size:
+            raise RuntimeError("Could not download file")
+        update_downloaded_apks(sha256, downloaded_apk_path, downloaded_apks)
     except requests.Timeout:
         print(f'Timeout (5 minutes)')
     except requests.RequestException as e:
@@ -43,7 +49,7 @@ def download_apk(sha256, download_dir, downloaded_apk_path, downloaded_apks):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input", help="Path to the repack.txt file", default="repack.csv")
+    parser.add_argument("-i", "--input", help="Path to the repack.csv file", default="repack.csv")
     parser.add_argument("-o", "--output", help="Output directory for downloaded APKs", default="repack/")
     parser.add_argument("-s", "--start", help="Start line (1-based, starts after the first line)", type=int, required=True)
     parser.add_argument("-e", "--end", help="End line (1-based, starts after the first line)", type=int, required=True)
