@@ -13,9 +13,6 @@ resource_collection:
 	@echo "resource collection..."
 	@make -C $(RESOURCE_DIR) collection
 
-server:
-	@make -C $(RESOURCE_DIR) server
-
 birthmark_generation:
 	@echo "birthmark generation..."
 	@make -C $(BIRTHMARK_DIR) birthmark
@@ -38,4 +35,4 @@ clean-all:
 
 
 
-.PHONY: randomized_test resource_collection birthmark_generation repackage_detection archive server clean clean-all 
+.PHONY: randomized_test resource_collection birthmark_generation repackage_detection archive clean clean-all 

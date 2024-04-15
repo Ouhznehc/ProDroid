@@ -15,8 +15,6 @@ collection:
 	done; \
 	echo "Finish file collection!"
 
-server:
-	@python3 server.py
 
 
 .PHONY: collection server
