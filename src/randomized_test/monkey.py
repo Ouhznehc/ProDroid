@@ -22,7 +22,7 @@ APK_KEEP_PATH = config['apk_keep_path']
 
 # Check if the correct number of command line arguments is provided
 if len(sys.argv) != 2:
-    print("Usage: python monkey.py <APK_FILE_PATH>")
+    print("Usage: python3 monkey.py <APK_FILE_PATH>")
     sys.exit(1)
 
 log_file = open(LOG_PATH, 'a', encoding='utf-8')

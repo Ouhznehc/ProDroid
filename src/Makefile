@@ -5,6 +5,12 @@ export REPACKAGE_DIR = $(WORK_DIR)/repackage_detection
 export BIRTHMARK_DIR = $(WORK_DIR)/birthmark_generation
 export DATA_DIR = $(WORK_DIR)/data
 
+install:
+	@echo "need module: pillow, imagehash, datasketch"
+	@pip install pillow imagehash datasketch
+	@echo "need package jq"
+	@sudo apt install jq
+
 randomized_test:
 	@echo "randomized testing..."
 	@make -C $(RANDOM_DIR) random

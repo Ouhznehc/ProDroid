@@ -1,6 +1,6 @@
 birthmark:
-	@python dhash.py
-	@python kmeans.py
-	@python minihash.py
+	@python3 dhash.py
+	@python3 kmeans.py
+	@python3 minihash.py
 
 .PHONY: birthmark
