@@ -47,6 +47,34 @@ log_info(f"Perform random test on `{os.path.basename(APK_FILE)}`")
 package_name_pattern = re.compile(r"package: name='([^']+)'")
 main_activity_pattern = re.compile(r"launchable-activity: name='([^']+)'")
 
+def is_app_in_foreground(package_name):
+    """Check if the application is currently in the foreground."""
+    result = subprocess.run('adb shell dumpsys activity activities | grep mResumedActivity',
+                            shell=True, stdout=subprocess.PIPE, text=True)
+    if result.stdout:
+        foreground_app = re.search(r"([^ ]+)/([^ ]+) t", result.stdout)
+        if foreground_app:
+            current_package = foreground_app.group(1)
+            if package_name == current_package:
+                return True
+    return False
+
+def monitor_app_during_monkey(package_name, monkey_process):
+    """Monitor the foreground app while Monkey is running and terminate if it's not the correct app."""
+    try:
+        while monkey_process.poll() is None:  # Check if Monkey is still running
+            if not is_app_in_foreground(package_name):
+                log_error(f"The application {package_name} is no longer in the foreground. Exiting test.")
+                monkey_process.terminate()
+                return False
+            time.sleep(5)  # Wait for 5 seconds before checking again
+    except Exception as e:
+        log_error(f"Error during monitoring: {str(e)}")
+        return False
+    return True
+
+
+
 # Function to run aapt command and extract package name and main activity
 def get_aapt_output(command, package_name_pattern, main_activity_pattern):
     result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8')
@@ -117,6 +145,9 @@ if package_name and main_activity:
                 # Prompt whether to force quit the Monkey test
                 try:
                 # Monitor Monkey process and wait for completion
+                    if not monitor_app_during_monkey(package_name, monkey_process):
+                        log_error("Test was terminated due to application switching.")
+                        exit(1)
                     monkey_process.wait(timeout=180)
                     log_info("Monkey test completed successfully")
                 except subprocess.TimeoutExpired:

@@ -1,0 +1,9 @@
+{
+  "random_seed": 12345,
+  "initial_delay": 5,
+  "events_count": 100000,
+  "log_path": "..//data/routine.log",
+  "apk_path": "/media/ouhznehc/FY/apks/repack-1_100",
+  "screenshot_interval": 5,
+  "data_path": "../data"
+}
