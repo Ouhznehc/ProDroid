@@ -24,7 +24,7 @@ DATA_PATH = config['data_path']
 
 # Check if the correct number of command line arguments is provided
 if len(sys.argv) != 2:
-    print("Usage: python routine.py <APK_FILE_PATH>")
+    print("Usage: python birthmark.py <APK_FILE_PATH>")
     sys.exit(1)
 
 log_file = open(LOG_PATH, 'a', encoding='utf-8')
@@ -55,14 +55,15 @@ def take_screenshot_and_save(package_name):
     os.makedirs(os.path.dirname(screenshot_path), exist_ok=True)
     subprocess.run(f"adb shell screencap -p > {screenshot_path}", shell=True)
     img = Image.open(screenshot_path)
-    hash = imagehash.dhash(img)
+    hash = imagehash.dhash(img, hash_size=16)
     return screenshot_path, str(hash)
 
 def save_hash_data(package_name, screenshot_path, hash_value):
     csv_path = f"{DATA_PATH}/{package_name}/birthmark.csv"
     os.makedirs(os.path.dirname(csv_path), exist_ok=True)
+    screenshot = os.path.splitext(os.path.basename(screenshot_path))[0]
     with open(csv_path, 'a') as f:
-        f.write(f"{screenshot_path},{hash_value}\n")
+        f.write(f"{screenshot},{hash_value}\n")
         
 def run_monkey_with_screenshots(package_name, monkey_process):
     next_screenshot_time = time.time() + SCREENSHOT_INTERVAL
