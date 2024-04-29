@@ -2,7 +2,7 @@
   "random_seed": 12345,
   "initial_delay": 5,
   "events_count": 50000,
-  "log_path": "..//data/birthmark.log",
+  "log_path": "../data/birthmark.log",
   "apk_path": "/media/ouhznehc/FY/apks/repack-101_200",
   "screenshot_interval": 5,
   "data_path": "../data"

@@ -1,6 +1,6 @@
 {
-    "res_dir": "../data/resource/temporary",
-    "kmeans_path": "../data/birthmark/kmeans/kmeans.txt",
-    "output_dir": "../data/birthmark/temporary",
+    "res_dir": "../../data/resource",
+    "kmeans_path": "../kmeans/kmeans.txt",
+    "output_dir": "../../data/birthmark",
     "num_perm": 1000
 }

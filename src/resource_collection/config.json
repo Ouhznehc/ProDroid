@@ -1,4 +1,4 @@
 {
-  "upload_folder": "~/ResourceCollector",
-  "resource_path": "../data/resource/temporary"
+  "upload_folder": "../../data/resource-1001_1100",
+  "resource_path": "../../data/resource"
 }

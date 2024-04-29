@@ -2,7 +2,7 @@
   "random_seed": 12345,
   "initial_delay": 5,
   "events_count": 100000,
-  "log_path": "../data/log/monkey.log",
-  "apk_path": "/media/ouhznehc/FY/apks/repack-1_100",
-  "apk_keep_path": "/media/ouhznehc/FY/apks/repack-1_100"
+  "log_path": "NEED_TO_SET",
+  "apk_path": "NEED_TO_SET",
+  "apk_keep_path": "NEED_TO_SET"
 }

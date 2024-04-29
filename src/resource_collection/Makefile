@@ -1,5 +1,5 @@
-UPLOAD_PATH := $(shell jq -r '.upload_folder' config.json)
-RES_PATH := $(shell jq -r '.resource_path' config.json)
+UPLOAD_PATH := $(shell node -p "require('./config.json').upload_folder")
+RES_PATH := $(shell node -p "require('./config.json').resource_path")
 
 collection:
 	@for fn in $$(find $(UPLOAD_PATH) -type f); do \

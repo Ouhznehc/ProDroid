@@ -1,8 +1,8 @@
 {
-    "output_dir": "../data/birthmark/temporary",
+    "birthmark_dir": "../../data/birthmark",
     "num_perm": 1000,
     "threshold": 0.3,
     "weights": [0.9, 0.1],
-    "report_path": "../data/report/report.csv"
+    "report_path": "../../data/report.csv"
       
 }

@@ -29,7 +29,7 @@ def main():
     with open('config.json', 'r') as file:
         config = json.load(file)
 
-    output_dir = config['output_dir']
+    birthmark_dir = config['birthmark_dir']
     threshold = config.get('threshold', 0.3)
     num_perm = config.get('num_perm', 1000)
     weights = tuple(config.get('weights', (0.9, 0.1)))
@@ -39,8 +39,8 @@ def main():
     minhash_objects = {}
 
     apk_paths = {}
-    for apk_name in os.listdir(output_dir):
-        minihash_path = os.path.join(output_dir, apk_name, 'minihash.txt')
+    for apk_name in os.listdir(birthmark_dir):
+        minihash_path = os.path.join(birthmark_dir, apk_name, 'minihash.txt')
         if os.path.exists(minihash_path):
             with open(minihash_path, 'r') as mh_file:
                 minihash_values = mh_file.read().strip().strip('[]').replace('\n', ' ').split()
@@ -50,7 +50,7 @@ def main():
                     minhash.update((value).to_bytes(4, byteorder='big'))
                 lsh.insert(apk_name, minhash)
                 minhash_objects[apk_name] = minhash
-                apk_paths[apk_name] = os.path.join(output_dir, apk_name, 'kmeans.txt')
+                apk_paths[apk_name] = os.path.join(birthmark_dir, apk_name, 'kmeans.txt')
 
     similar_apks = []
     for apk_name, minhash in minhash_objects.items():

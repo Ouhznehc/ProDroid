@@ -15,7 +15,7 @@ adb aapt
 ```
 **Python Module**
 ```
-pip install flask imagehash datasketch
+pip install imagehash datasketch Pillow
 ```
 
 ## Usage
