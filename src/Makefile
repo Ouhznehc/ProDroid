@@ -13,7 +13,7 @@ install:
 
 randomized_test:
 	@echo "randomized testing..."
-	@make -C $(RANDOM_DIR) random
+	@make -C $(RANDOM_DIR) activity
 
 resource_collection:
 	@echo "resource collection..."

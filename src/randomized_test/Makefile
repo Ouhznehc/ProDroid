@@ -47,6 +47,17 @@ random: init
 		sleep 5; \
 	done
 
+activity:
+# Check sanity for necessary file
+	@test -d "$(APK_PATH)" || (echo "Error: $(APK_PATH) directory not found." && exit 1)
+
+	@test -n "$(APK_LIST)" || (echo "Error: No APK files found in $(APK_PATH) directory." && exit 1)
+
+	@test -f $(LOG_FILE) && rm -f $(LOG_FILE) || true
+	
+	@for APK_FILE in $(APK_LIST); do \
+		python activity.py $$APK_FILE; \
+	done
 
 
-.PHONY:init random
+.PHONY:init random activity

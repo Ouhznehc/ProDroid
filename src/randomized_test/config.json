@@ -2,7 +2,7 @@
   "random_seed": 12345,
   "initial_delay": 5,
   "events_count": 100000,
-  "log_path": "NEED_TO_SET",
-  "apk_path": "NEED_TO_SET",
+  "log_path": "activity.log",
+  "apk_path": "../../apks",
   "apk_keep_path": "NEED_TO_SET"
 }
